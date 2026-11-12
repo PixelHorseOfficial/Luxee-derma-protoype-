@@ -1,0 +1,370 @@
+/* ==========================================================================
+   Services section styles
+   (Tailwind utility classes + the old inline <style> block, converted to CSS)
+   ========================================================================== */
+
+/* ---------- Section backdrop (image) ---------- */
+.sv-section {
+  position: relative;
+  isolation: isolate;
+  display: flex;
+  height: 100vh;
+  align-items: center;
+  overflow: hidden;
+  padding: 2.5rem 1rem;
+  background-color: #03271f;
+  background-image: url("/images/bg-hero.png");
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: cover;
+  background-attachment: fixed; /* same fixed image as the marquee -> no seam */
+}
+
+@media (min-width: 640px) {
+  .sv-section {
+    padding-left: 2rem;
+    padding-right: 2rem;
+  }
+}
+
+/* Desktop: the whole section (header + 2 rows of cards) fits exactly one screen */
+@media (min-width: 1024px) {
+  .sv-section {
+    height: 100vh;
+    height: 100svh;
+    min-height: 620px;
+    padding: 0 4%;
+  }
+}
+
+/* ---------- Content wrapper ---------- */
+.sv-panel {
+  position: relative;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+@media (min-width: 1024px) {
+  .sv-panel { height: 100%; }
+}
+
+/* ---------- Inner container & header ---------- */
+.sv-inner {
+  position: relative;
+  z-index: 1;
+  box-sizing: border-box;
+  width: 100%;
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: 4rem 1.5rem;
+}
+
+@media (min-width: 1024px) {
+  .sv-inner {
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    /* top clears the fixed navbar (~60px) */
+    padding: clamp(4.25rem, 9.5vh, 5.75rem) 2rem clamp(1rem, 3vh, 2rem);
+  }
+}
+
+.sv-header {
+  flex-shrink: 0;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  align-items: flex-end;
+  gap: 1.5rem;
+}
+
+.sv-eyebrow {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  font-size: 11px;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: rgba(0, 0, 0, 0.7);
+}
+
+.sv-eyebrow-line {
+  display: block;
+  height: 1px;
+  width: 2rem;
+  background: #0e0d0c;
+}
+
+.sv-title {
+  margin-top: 0.75rem;
+  font-size: 36px;
+  line-height: 0.95;
+  color: #1d1b1b;
+}
+
+@media (min-width: 1024px) {
+  .sv-title {
+    font-size: clamp(28px, 5.4vh, 52px);
+  }
+}
+
+.sv-subtitle {
+  max-width: 420px;
+  font-size: 14px;
+  line-height: 1.6;
+  color: rgba(0, 0, 0, 0.85);
+}
+
+/* ---------- Grid ---------- */
+.sv-grid {
+  margin-top: 3rem;
+  display: grid;
+  gap: 1.25rem;
+}
+
+@media (min-width: 768px) {
+  .sv-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+}
+
+@media (min-width: 1024px) {
+  .sv-grid {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    grid-template-rows: repeat(2, minmax(0, 1fr));
+    flex: 1 1 0;
+    min-height: 0;
+    margin-top: clamp(0.75rem, 2.6vh, 2.5rem);
+    gap: clamp(0.75rem, 2.2vh, 1.25rem);
+  }
+}
+
+/* ---------- Reveal on scroll ---------- */
+.sv-reveal {
+  opacity: 0;
+  transform: translateY(2.5rem) scale(0.97);
+  transition: all 800ms cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.sv-reveal.is-shown {
+  opacity: 1;
+  transform: translateY(0) scale(1);
+}
+
+.sv-reveal.sv-full-height {
+  height: 100%;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .sv-reveal,
+  .sv-reveal.is-shown {
+    opacity: 1;
+    transform: none;
+    transition: none;
+  }
+}
+
+/* ---------- Service card (flip) ---------- */
+.sv-card {
+  position: relative;
+  height: 100%;
+  min-height: 300px;
+  perspective: 1200px;
+  cursor: pointer;
+  outline: none;
+  border-radius: 1.8rem;
+}
+
+.sv-card:focus-visible {
+  box-shadow: 0 0 0 3px #e8ae74;
+}
+
+.sv-card-inner {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  min-height: inherit;
+  transform-style: preserve-3d;
+  transition: transform 800ms cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+/* flips on hover (mouse) or tap/click/Enter (toggle) */
+@media (hover: hover) {
+  .sv-card:hover .sv-card-inner { transform: rotateY(180deg); }
+}
+.sv-card.is-flipped .sv-card-inner { transform: rotateY(180deg); }
+
+.sv-face {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+  border-radius: 1.8rem;
+  border: 1px solid rgba(0, 0, 0, 0.06);
+  -webkit-backface-visibility: hidden;
+  backface-visibility: hidden;
+}
+
+/* Front */
+.sv-front { background-color: #f2ede8; }
+
+.sv-card-img {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.sv-card-img-fallback {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(to bottom right, #faf7f5, #f2ede8, #e6d5b8);
+}
+
+.sv-card-shade {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(to top, rgba(0, 0, 0, 0.72), rgba(0, 0, 0, 0.15) 55%, transparent);
+}
+
+.sv-card-tag {
+  position: absolute;
+  top: 1rem;
+  right: 1rem;
+  z-index: 2;
+  padding: 0.375rem 0.75rem;
+  font-size: 10px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: #fff;
+  background-color: rgba(11, 11, 11, 0.9);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 9999px;
+  -webkit-backdrop-filter: blur(12px);
+  backdrop-filter: blur(12px);
+}
+
+.sv-front-caption {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 2;
+  display: flex;
+  align-items: center;
+  gap: 0.85rem;
+  padding: 1.25rem 1.5rem;
+}
+
+.sv-front-title {
+  margin: 0;
+  font-size: clamp(16px, 1.5vw, 20px);
+  line-height: 1.2;
+  color: #fff;
+}
+
+.sv-card-icon {
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 2.75rem;
+  height: 2.75rem;
+  font-size: 18px;
+  background-color: #fff;
+  border: 1px solid rgba(0, 0, 0, 0.1);
+  border-radius: 9999px;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.12);
+}
+
+/* Back */
+.sv-back {
+  transform: rotateY(180deg);
+  background-color: #eee5fc94;
+  box-shadow: 0 28px 70px rgba(0, 0, 0, 0.18);
+}
+
+.sv-back-bg {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  opacity: 0.16;
+  filter: saturate(0.8);
+}
+
+.sv-back-content {
+  position: relative;
+  z-index: 2;
+  height: 100%;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: 1.75rem 2rem;
+}
+
+.sv-back-icon {
+  background-color: #7c59b4c2;
+  border-color: #0e0d0c07;
+  margin-bottom: 0.9rem;
+}
+
+.sv-card-title {
+  margin: 0;
+  font-size: clamp(16px, 1.5vw, 21px);
+  line-height: 1.2;
+  color: #0b0b0b;
+}
+
+.sv-card-desc {
+  margin: 0.75rem 0 0;
+  font-size: clamp(12px, 1.7vh, 14px);
+  line-height: 1.6;
+  color: rgba(0, 0, 0, 0.85);
+}
+
+.sv-card-cta {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  margin-top: 1.25rem;
+  font-size: 11px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: #030303;
+}
+
+.sv-card-cta-text { position: relative; }
+
+.sv-card-cta-underline {
+  position: absolute;
+  bottom: -0.25rem;
+  left: 0;
+  height: 1px;
+  width: 100%;
+  background-color: #070808;
+}
+
+.sv-card-cta-arrow { display: inline-block; }
+
+.sv-card-bar {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  z-index: 3;
+  height: 3px;
+  width: 100%;
+  background: black;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .sv-card-inner { transition-duration: 1ms; }
+}
+
+/* Short laptop screens: keep the back text inside the card */
+@media (min-width: 1024px) and (max-height: 780px) {
+  .sv-back-content { padding: 1rem 1.5rem; }
+  .sv-back-icon { display: none; }
+  .sv-card-desc { font-size: 12px; line-height: 1.5; }
+  .sv-card-cta { margin-top: 0.75rem; }
+}

@@ -1,0 +1,499 @@
+/* =========================================================
+   Doctors section
+   ========================================================= */
+
+/* ---------- Keyframes ---------- */
+@keyframes dr-float {
+  0%, 100% { transform: translate(0, 0) scale(1); }
+  50%      { transform: translate(40px, 30px) scale(1.15); }
+}
+@keyframes dr-spin {
+  to { transform: rotate(360deg); }
+}
+@keyframes dr-pulse {
+  0%   { transform: scale(1);   opacity: 0.5; }
+  100% { transform: scale(1.7); opacity: 0; }
+}
+
+/* ---------- Section + layout ---------- */
+.dr {
+  position: relative;
+  overflow: hidden;
+  color: #f1e9df;
+  background-color: #03271f;
+  background-image: url("/images/bg-hero.png");
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+}
+
+.dr__container {
+  position: relative;
+  max-width: 1280px;
+  margin-left: auto;
+  margin-right: auto;
+  padding: 4rem 1.5rem;
+}
+
+@media (min-width: 1024px) {
+  .dr__container {
+    padding: 6rem 2rem;
+  }
+}
+
+.dr__header {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  align-items: flex-end;
+  gap: 1.5rem;
+}
+
+/* Cursor spotlight */
+.dr__spotlight {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background: radial-gradient(
+    520px circle at var(--sx, 50%) var(--sy, 30%),
+    rgba(200, 169, 122, 0.1),
+    transparent 65%
+  );
+}
+
+/* Ambient floating gold glows */
+.dr-orb {
+  position: absolute;
+  border-radius: 9999px;
+  pointer-events: none;
+  filter: blur(64px);
+  animation: dr-float 16s ease-in-out infinite;
+}
+.dr-orb--top {
+  top: 2.5rem;
+  right: 10%;
+  width: 18rem;
+  height: 18rem;
+  background-color: rgba(200, 169, 122, 0.1);
+}
+.dr-orb--bottom {
+  bottom: 0;
+  left: 5%;
+  width: 16rem;
+  height: 16rem;
+  background-color: rgba(200, 169, 122, 0.08);
+  animation-delay: -8s;
+}
+
+/* ---------- Fade + lift reveal ---------- */
+.dr-reveal {
+  transition: all 900ms cubic-bezier(0.22, 1, 0.36, 1);
+}
+.dr-reveal:not(.is-shown) {
+  opacity: 0;
+  transform: translateY(3rem) scale(0.95);
+}
+.dr-reveal.is-shown {
+  opacity: 1;
+  transform: translateY(0) scale(1);
+}
+.dr-reveal--full-height {
+  height: 100%;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .dr-reveal {
+    transition: none;
+    opacity: 1 !important;
+    transform: none !important;
+  }
+}
+
+/* ---------- Heading ---------- */
+.dr-heading {
+  font-size: 36px;
+  line-height: 1.05;
+  color: #000;
+}
+
+@media (min-width: 1024px) {
+  .dr-heading {
+    font-size: 52px;
+  }
+}
+
+.dr-heading__rule {
+  display: block;
+  margin-top: 1rem;
+  height: 1px;
+  width: 6rem;
+  background: linear-gradient(to right, #0c0c0b, transparent);
+}
+
+/* ---------- Tagline ---------- */
+.dr-tagline {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  column-gap: 0.75rem;
+  row-gap: 0.25rem;
+  font-size: 12px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: #000;
+}
+
+.dr-tagline__group {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.dr-tagline__item {
+  cursor: default;
+  opacity: 0;
+  transform: translateY(-0.75rem);
+  transition: all 700ms ease-out;
+}
+.dr-tagline__item.is-shown {
+  opacity: 0.5;
+  transform: translateY(0);
+}
+.dr-tagline__item:hover,
+.dr-tagline__item.is-shown:hover {
+  opacity: 1 !important;
+  color: #000000;
+  transform: translateY(-0.125rem);
+}
+
+.dr-tagline__dot {
+  color: #000000;
+  opacity: 0;
+  transform: scale(0);
+  transition: all 700ms;
+}
+.dr-tagline__dot.is-shown {
+  opacity: 0.7;
+  transform: scale(1);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .dr-tagline__item {
+    transition: none;
+    opacity: 0.5;
+    transform: none;
+  }
+}
+
+/* ---------- Card grid ---------- */
+.dr-grid {
+  margin-top: 2.5rem;
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 1.25rem;
+}
+
+@media (min-width: 768px) {
+  .dr-grid {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+}
+
+/* Focus effect: while one card is hovered, its neighbours dim. */
+@media (hover: hover) {
+  .dr-grid:hover .dr-card:not(:hover) {
+    opacity: 0.5;
+    filter: saturate(0.6);
+  }
+}
+
+/* ---------- Card ---------- */
+.dr-card {
+  position: relative;
+  height: 100%;
+  overflow: hidden;
+  cursor: default;
+  padding: 2rem;
+  border-radius: 1.8rem;
+  border: 1px solid rgba(0, 0, 0, 0.1);
+  background-color: #fcf4fcfd;
+  color: #1a1a1a;
+  transition-property: transform, box-shadow, background-color, border-color, opacity, filter;
+  transition-duration: 300ms;
+  transition-timing-function: ease-out;
+  will-change: transform;
+}
+
+.dr-card:hover {
+  border-color: transparent;
+  box-shadow: 0 30px 80px rgba(0, 0, 0, 0.35);
+}
+
+.dr-card:hover .dr-ring,
+.dr-card:hover .dr-spin {
+  animation: dr-spin 3s linear infinite;
+}
+
+/* Travelling gold border: a spinning gradient with an opaque face on top */
+.dr-card__border {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity 300ms;
+}
+.dr-card:hover .dr-card__border {
+  opacity: 1;
+}
+
+.dr-card__border-box {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  width: 250%;
+  aspect-ratio: 1 / 1;
+  transform: translate(-50%, -50%);
+}
+
+.dr-spin {
+  width: 100%;
+  height: 100%;
+  background: conic-gradient(
+    from 0deg,
+    transparent 0 55%,
+    #010202 78%,
+    #000000 90%,
+    transparent 100%
+  );
+}
+
+.dr-card__border-face {
+  position: absolute;
+  inset: 1px;
+  border-radius: calc(1.8rem - 1px);
+  background-color: #f1e7f1f1;
+}
+
+/* Cursor-following glow */
+.dr-card__glow {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity 300ms;
+  background: radial-gradient(
+    340px circle at var(--mx, 50%) var(--my, 50%),
+    rgba(255, 255, 255, 0.28),
+    transparent 65%
+  );
+}
+.dr-card:hover .dr-card__glow {
+  opacity: 1;
+}
+
+/* Diagonal sheen sweeping across */
+.dr-card__sheen {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: -33.333333%;
+  width: 25%;
+  pointer-events: none;
+  background: linear-gradient(to right, transparent, rgba(255, 255, 255, 0.1), transparent);
+  transform: translateX(-100%) skewX(-12deg);
+  transition: transform 1000ms ease-out;
+}
+.dr-card:hover .dr-card__sheen {
+  transform: translateX(650%) skewX(-12deg);
+}
+
+/* Decorative quote mark that grows and tilts */
+.dr-card__mark {
+  position: absolute;
+  top: -0.5rem;
+  right: 1.25rem;
+  font-size: 110px;
+  line-height: 1;
+  color: rgba(9, 75, 61, 0.1);
+  pointer-events: none;
+  transition: all 500ms cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+.dr-card:hover .dr-card__mark {
+  transform: scale(1.25) rotate(-6deg);
+  color: rgba(9, 75, 61, 0.25);
+}
+
+.dr-card__content {
+  position: relative;
+  z-index: 10;
+}
+
+.dr-card__head {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+/* ---------- Avatar ---------- */
+.dr-avatar {
+  position: relative;
+  flex-shrink: 0;
+  width: 3.5rem;
+  height: 3.5rem;
+  opacity: 0;
+  transform: scale(0.5);
+  transition: all 700ms cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+.dr-avatar.is-shown {
+  opacity: 1;
+  transform: scale(1);
+}
+
+.dr-avatar__pulse {
+  position: absolute;
+  inset: 0;
+  border-radius: 9999px;
+  background-color: rgba(9, 75, 61, 0.3);
+  animation: dr-pulse 2.6s ease-out infinite;
+}
+
+.dr-ring {
+  position: absolute;
+  inset: -3px;
+  border-radius: 9999px;
+  opacity: 0;
+  transition: opacity 300ms;
+  background: conic-gradient(
+    from 0deg,
+    #000000,
+    transparent 35%,
+    #000000 60%,
+    transparent 85%,
+    #000000
+  );
+}
+.dr-card:hover .dr-ring {
+  opacity: 1;
+}
+
+.dr-avatar__face {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 3.5rem;
+  height: 3.5rem;
+  border-radius: 9999px;
+  background-color: #b419b9a4;
+  color: #f1e9df;
+  font-size: 18px;
+  font-weight: 500;
+  box-shadow: 0 0 0 2px #030303a6;
+  transition: transform 500ms cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+.dr-card:hover .dr-avatar__face {
+  transform: scale(1.1) rotate(360deg);
+}
+
+/* ---------- Text ---------- */
+.dr-card__name {
+  font-size: 18px;
+  transition: transform 300ms;
+}
+.dr-card:hover .dr-card__name {
+  transform: translateX(0.25rem);
+}
+
+.dr-card__role {
+  font-size: 11px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  opacity: 0.7;
+  transition: all 300ms;
+}
+.dr-card:hover .dr-card__role {
+  opacity: 1;
+  color: #030c0a;
+  letter-spacing: 0.2em;
+  transform: translateX(0.25rem);
+}
+
+.dr-card__quote {
+  margin-top: 1.5rem;
+  font-size: 14px;
+  line-height: 1.6;
+  opacity: 0.9;
+  transition: all 300ms;
+}
+.dr-card:hover .dr-card__quote {
+  opacity: 1;
+  transform: translateX(0.125rem);
+}
+
+/* ---------- Stars ---------- */
+.dr-stars {
+  margin-top: 1.5rem;
+  display: flex;
+  gap: 0.25rem;
+  font-size: 12px;
+  color: #b419b9a6;
+}
+
+.dr-star {
+  display: inline-block;
+  opacity: 0;
+  transform: scale(0) rotate(-90deg);
+  transition: all 500ms cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+.dr-star.is-shown {
+  opacity: 1;
+  transform: scale(1) rotate(0deg);
+}
+
+.dr-star__glyph {
+  display: inline-block;
+  transition: transform 300ms cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+.dr-card:hover .dr-star__glyph {
+  transform: translateY(-0.25rem) scale(1.5);
+  filter: drop-shadow(0 2px 6px rgba(0, 0, 0, 0.6));
+}
+
+/* ---------- Line drawing along the bottom edge ---------- */
+.dr-card__line {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  z-index: 10;
+  width: 100%;
+  height: 3px;
+  transform-origin: left;
+  transform: scaleX(0);
+  background: linear-gradient(to right, #000000, #0b0c0c, #080808);
+  transition: transform 500ms ease-out;
+}
+.dr-card:hover .dr-card__line {
+  transform: scaleX(1);
+}
+
+/* ---------- Reduced motion ---------- */
+@media (prefers-reduced-motion: reduce) {
+  .dr-orb,
+  .dr-avatar__pulse,
+  .dr-card:hover .dr-ring,
+  .dr-card:hover .dr-spin {
+    animation: none;
+  }
+  .dr-grid:hover .dr-card:not(:hover) {
+    opacity: 1;
+    filter: none;
+  }
+  .dr-avatar,
+  .dr-star {
+    transition: none;
+    opacity: 1;
+    transform: none;
+  }
+}

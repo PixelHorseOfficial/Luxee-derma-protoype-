@@ -1,0 +1,243 @@
+/* =========================================================
+   Results section
+   ========================================================= */
+
+/* ---------- Keyframes ---------- */
+@keyframes rs-sheen {
+  0%   { transform: translateX(-120%) skewX(-18deg); }
+  100% { transform: translateX(520%)  skewX(-18deg); }
+}
+
+/* ---------- Section + layout ---------- */
+.rs {
+  background-color: #03271f;
+  background-image: url("/images/bg-service.png");
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+}
+
+.rs__container {
+  max-width: 1280px;
+  margin-left: auto;
+  margin-right: auto;
+  padding: 3.5rem 1.5rem;
+}
+
+@media (min-width: 1024px) {
+  .rs__container {
+    padding: 5rem 2rem;
+  }
+}
+
+/* ---------- Fade + lift reveal ---------- */
+.rs-reveal {
+  transition: all 900ms cubic-bezier(0.22, 1, 0.36, 1);
+}
+.rs-reveal:not(.is-shown) {
+  opacity: 0;
+  transform: translateY(2.5rem) scale(0.97);
+}
+.rs-reveal.is-shown {
+  opacity: 1;
+  transform: translateY(0) scale(1);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .rs-reveal {
+    transition: none;
+    opacity: 1 !important;
+    transform: none !important;
+  }
+}
+
+/* ---------- Panel ---------- */
+.rs-panel {
+  position: relative;
+  overflow: hidden;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  align-items: center;
+  gap: 2rem;
+  padding: 2rem;
+  border-radius: 2rem;
+  border: 1px solid rgba(0, 0, 0, 0.1);
+  background-color: #fff;
+  color: #1a1a1a;
+  transition: all 500ms ease-out;
+}
+
+@media (min-width: 1024px) {
+  .rs-panel {
+    padding: 2.5rem;
+  }
+}
+
+.rs-panel:hover {
+  transform: translateY(-0.25rem);
+  border-color: rgba(255, 255, 255, 0.4);
+  box-shadow: 0 28px 70px rgba(0, 0, 0, 0.35);
+}
+
+/* Faint light streak sweeping across on hover */
+.rs-sheen {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  width: 16.666667%;
+  pointer-events: none;
+  transform: translateX(-100%);
+  background: linear-gradient(to right, transparent, rgba(255, 255, 255, 0.25), transparent);
+}
+
+.rs-panel:hover .rs-sheen {
+  animation: rs-sheen 1.4s ease-out;
+}
+
+/* Gold line drawing along the top edge when the panel appears */
+.rs-panel__line {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 2px;
+  pointer-events: none;
+  transform-origin: left;
+  transform: scaleX(0);
+  background: linear-gradient(to right, #b419b9a6, #b419b9a6, transparent);
+  transition: transform 1400ms cubic-bezier(0.22, 1, 0.36, 1);
+}
+.rs-panel__line.is-shown {
+  transform: scaleX(1);
+}
+
+/* ---------- Heading: each line slides up out of a mask ---------- */
+.rs-heading {
+  position: relative;
+  font-size: 28px;
+  line-height: 1.05;
+}
+
+@media (min-width: 1024px) {
+  .rs-heading {
+    font-size: 36px;
+  }
+}
+
+.rs-heading__mask {
+  display: block;
+  overflow: hidden;
+  padding-bottom: 0.08em;
+}
+
+.rs-heading__line {
+  display: block;
+  transform: translateY(115%);
+  transition: transform 900ms cubic-bezier(0.22, 1, 0.36, 1);
+}
+.rs-heading__line.is-shown {
+  transform: translateY(0);
+}
+
+/* ---------- Stats ---------- */
+.rs-stats {
+  position: relative;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 2.5rem;
+}
+
+.rs-stat {
+  position: relative;
+  min-width: 184px;
+  margin: -0.75rem;
+  padding: 11px;
+  cursor: default;
+  border-radius: 1rem;
+  border: 1px solid transparent;
+  transition-property: transform, box-shadow, border-color;
+  transition-duration: 300ms;
+  transition-timing-function: ease-out;
+  will-change: transform;
+}
+
+.rs-stat:hover {
+  border-color: #b419b9a6;
+  box-shadow: 0 18px 40px rgba(0, 0, 0, 0.12);
+}
+
+.rs-stat__value {
+  font-size: 30px;
+  font-variant-numeric: tabular-nums;
+  transform-origin: left;
+  transition: all 500ms cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+.rs-stat:hover .rs-stat__value {
+  transform: scale(1.1);
+  color: #b419b9a6;
+}
+
+/* Underline: draws in on scroll, stretches full width on hover */
+.rs-stat__underline {
+  display: block;
+  width: 100%;
+  height: 2px;
+  margin-top: 0.375rem;
+  transform-origin: left;
+  transform: scaleX(0);
+  transition: transform 700ms ease-out;
+}
+.rs-stat__underline.is-shown {
+  transform: scaleX(1);
+}
+
+.rs-stat__underline-bar {
+  display: block;
+  width: 2rem;
+  height: 100%;
+  background-color: #b419b9a6;
+  transition: width 500ms ease-out;
+}
+
+.rs-stat:hover .rs-stat__underline-bar {
+  width: 100%;
+}
+
+.rs-stat__label {
+  max-width: 160px;
+  margin-top: 0.5rem;
+  font-size: 11px;
+  line-height: 1.4;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  opacity: 0.7;
+  transition: all 300ms;
+}
+
+.rs-stat:hover .rs-stat__label {
+  opacity: 1;
+  transform: translateX(0.25rem);
+}
+
+/* ---------- Reduced motion ---------- */
+@media (prefers-reduced-motion: reduce) {
+  .rs-panel:hover .rs-sheen {
+    animation: none;
+  }
+  .rs-panel__line {
+    transition: none;
+    transform: scaleX(1);
+  }
+  .rs-heading__line {
+    transition: none;
+    transform: translateY(0);
+  }
+  .rs-stat__underline {
+    transition: none;
+    transform: scaleX(1);
+  }
+}

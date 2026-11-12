@@ -1,0 +1,139 @@
+.ba {
+  --bg: #bd99f76c;
+  --pill: #1f1c17;
+  --radius: 20px;
+  position: relative;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: clamp(32px, 9vh, 104px) 24px;
+  background: var(--bg);
+  overflow: hidden;
+  touch-action: pan-y;
+  user-select: none;
+  -webkit-user-select: none;
+  cursor: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24' fill='none' stroke='%23222' stroke-width='1.6' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M3 12h18M7 8l-4 4 4 4M17 8l4 4-4 4'/%3E%3C/svg%3E") 12 12, ew-resize;
+}
+
+/* Card: wide, rounded, lifted off the page with a soft shadow */
+.ba__frame {
+  position: relative;
+  width: 100%;
+  max-width: 1150px;
+  aspect-ratio: var(--ratio, 1150 / 650);
+  border-radius: var(--radius);
+  box-shadow:
+    0 40px 80px -30px rgba(90, 55, 30, 0.35),
+    0 12px 28px -8px rgba(90, 55, 30, 0.12);
+}
+
+/* Clipping layer: rounded corners for images, line and pills */
+.ba__media {
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  overflow: hidden;
+}
+
+/* Both images fill the exact same box, so they always match */
+.ba__img {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: var(--obj-pos, center);
+  pointer-events: none;
+  display: block;
+}
+
+/* "Before" layer: same box, clipped at --pos */
+.ba__before {
+  position: absolute;
+  inset: 0;
+  clip-path: inset(0 calc(100% - var(--pos)) 0 0);
+}
+
+/* Full-height white divider */
+.ba__line {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: var(--pos);
+  width: 2px;
+  background: #fff;
+  transform: translateX(-1px);
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.18);
+  z-index: 2;
+  pointer-events: none;
+}
+
+/* BEFORE / AFTER pills, inside the picture corners */
+.ba__label {
+  position: absolute;
+  top: 20px;
+  z-index: 3;
+  padding: 10px 16px;
+  border-radius: 999px;
+  background: var(--pill);
+  color: #fff;
+  font: 600 15px/1 "Inter", system-ui, sans-serif;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  pointer-events: none;
+}
+.ba__label--before { left: 20px; }
+.ba__label--after  { right: 20px; }
+
+/* Round white handle */
+.ba__handle {
+  position: absolute;
+  top: 50%;
+  left: var(--pos);
+  width: 52px;
+  height: 52px;
+  padding: 0;
+  border: 0;
+  border-radius: 50%;
+  display: grid;
+  place-items: center;
+  color: #1f1c17;
+  background: #fff;
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.22);
+  transform: translate(-50%, -50%);
+  z-index: 4;
+  cursor: inherit;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+.ba__handle:hover,
+.is-dragging .ba__handle { transform: translate(-50%, -50%) scale(1.08); }
+.ba__handle:focus-visible { outline: 2px solid var(--pill); outline-offset: 3px; }
+
+@media (max-width: 640px) {
+  .ba { padding: 32px 16px; }
+  .ba__frame { --radius: 16px; aspect-ratio: var(--ratio-m, 4 / 5); }
+  .ba__label { top: 12px; padding: 8px 12px; font-size: 12px; }
+  .ba__label--before { left: 12px; }
+  .ba__label--after  { right: 12px; }
+  .ba__handle { width: 44px; height: 44px; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .ba__handle { transition: none; }
+}
+
+/* Calibration panel (only shown with calibrate) */
+.ba__tune {
+  max-width: 1150px;
+  margin: 0 auto;
+  padding: 16px 24px 32px;
+  display: grid;
+  gap: 12px;
+  font: 500 14px/1.3 "Inter", system-ui, sans-serif;
+  color: #1f1c17;
+  background: var(--bg, #fff6ee);
+}
+.ba__tune label { display: grid; gap: 4px; }
+.ba__tune input { width: 100%; }
+.ba__tune code { padding: 10px 12px; border-radius: 8px; background: #1f1c17; color: #fff; }

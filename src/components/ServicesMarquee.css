@@ -1,0 +1,99 @@
+/* ------------------------------------------------------------------
+   ServicesMarquee — scrolling services strip between Hero and Services
+   Palette matches the Luxee Derma deep-emerald + gold theme.
+------------------------------------------------------------------- */
+
+.svc-marquee {
+  --svc-bg: #d6e4e0;
+  --svc-bg-band: #04382b;
+  --svc-gold: #bf50f3a1;
+  --svc-text: rgb(255, 255, 255);
+  --svc-line: rgba(10, 5, 1, 0.35);
+  --svc-speed: var(--svc-marquee-speed, 40s);
+
+  position: relative;
+  /* Same image + settings as .sv-section in Services.css. Both use a FIXED
+     background so the two sections look like one continuous surface. */
+  background-color: #a741e2ce;
+  background-image: url("/images/bg-hero.png");
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: cover;
+  background-attachment: fixed;
+  /* The "gap" above and below the strip */
+  padding: clamp(28px, 4vw, 56px) 0;
+}
+
+.svc-marquee__band {
+  position: relative;
+  background: rgba(2, 41, 31, 0.45);
+  -webkit-backdrop-filter: blur(6px);
+  backdrop-filter: blur(6px);
+  border-top: 1px solid var(--svc-line);
+  border-bottom: 1px solid var(--svc-line);
+}
+
+/* Fades the items out at both edges */
+.svc-marquee__viewport {
+  overflow: hidden;
+  -webkit-mask-image: linear-gradient(to right, transparent 0, #000 12%, #000 88%, transparent 100%);
+  mask-image: linear-gradient(to right, transparent 0, #000 12%, #000 88%, transparent 100%);
+}
+
+.svc-marquee__track {
+  display: flex;
+  width: max-content;
+  animation: svc-marquee-scroll var(--svc-speed) linear infinite;
+  will-change: transform;
+}
+
+.svc-marquee__band:hover .svc-marquee__track {
+  animation-play-state: paused;
+}
+
+.svc-marquee__group {
+  display: flex;
+  flex-shrink: 0;
+  align-items: center;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.svc-marquee__item {
+  display: flex;
+  flex-shrink: 0;
+  align-items: center;
+  gap: clamp(20px, 3vw, 44px);
+  padding-right: clamp(20px, 3vw, 44px);
+}
+
+.svc-marquee__label {
+  padding: clamp(16px, 2vw, 24px) 0;
+  font-family: "Inter", system-ui, sans-serif;
+  font-size: clamp(12px, 1.1vw, 14px);
+  font-weight: 500;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  white-space: nowrap;
+  color: var(--svc-text);
+}
+
+.svc-marquee__dot {
+  width: 8px;
+  height: 8px;
+  flex-shrink: 0;
+  border-radius: 50%;
+  background: var(--svc-gold);
+  box-shadow: 0 0 10px rgba(232, 174, 116, 0.55);
+}
+
+@keyframes svc-marquee-scroll {
+  from { transform: translateX(0); }
+  to   { transform: translateX(-50%); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .svc-marquee__track { animation: none; }
+  .svc-marquee__viewport { overflow-x: auto; }
+}

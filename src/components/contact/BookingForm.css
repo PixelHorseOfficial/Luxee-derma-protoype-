@@ -1,0 +1,290 @@
+/* =========================================================
+   Booking form
+   ========================================================= */
+
+/* ---------- Keyframes ---------- */
+@keyframes bk-shake {
+  0%, 100% { transform: translateX(0); }
+  20% { transform: translateX(-7px); }
+  40% { transform: translateX(6px); }
+  60% { transform: translateX(-4px); }
+  80% { transform: translateX(3px); }
+}
+
+@keyframes bk-error-in {
+  from { opacity: 0; transform: translateY(-6px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes bk-shine {
+  0%   { transform: translateX(-150%) skewX(-20deg); }
+  55%, 100% { transform: translateX(500%) skewX(-20deg); }
+}
+
+/* ---------- Card ---------- */
+.bk-card,
+.bk-card *,
+.bk-card *::before,
+.bk-card *::after {
+  box-sizing: border-box;
+}
+
+.bk-card {
+  padding: 1.75rem;
+  border-radius: 2rem;
+  border: 1px solid rgba(0, 0, 0, 0.05);
+  background-color: #fff;
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.06);
+  transition: box-shadow 500ms;
+}
+
+.bk-card:hover {
+  box-shadow: 0 30px 80px rgba(0, 0, 0, 0.1);
+}
+
+@media (min-width: 1024px) {
+  .bk-card {
+    padding: 2.5rem;
+  }
+}
+
+/* ---------- Header: eyebrow, title, subline ---------- */
+.bk-eyebrow {
+  font-size: 11px;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  opacity: 0;
+  transform: translateY(-0.75rem);
+  transition: all 700ms;
+}
+.bk-eyebrow.is-shown {
+  opacity: 0.5;
+  transform: translateY(0);
+}
+
+.bk-title {
+  margin: 0.75rem 0 0;
+  font-size: 32px;
+  font-weight: inherit;
+  line-height: 1.02;
+}
+
+@media (min-width: 1024px) {
+  .bk-title {
+    font-size: 40px;
+  }
+}
+
+.bk-sub {
+  margin: 0.75rem 0 0;
+  font-size: 13px;
+  color: rgba(0, 0, 0, 0.6);
+  opacity: 0;
+  transform: translateY(0.75rem);
+  transition: all 700ms;
+}
+.bk-sub.is-shown {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* ---------- Form layout ---------- */
+.bk-form {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  margin-top: 2rem;
+}
+
+.bk-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 1rem;
+}
+
+@media (min-width: 768px) {
+  .bk-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+/* ---------- Field wrapper + label ---------- */
+.bk-field {
+  display: block;
+}
+
+.bk-field > * + * {
+  margin-top: 0.5rem;
+}
+
+.bk-label {
+  display: block;
+  font-size: 11px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  opacity: 0.6;
+  transition: all 300ms;
+}
+
+/* Label warms up when its field is focused */
+.bk-field:focus-within .bk-label {
+  opacity: 1;
+  transform: translateX(0.25rem);
+}
+
+/* ---------- Error ---------- */
+.bk-shake {
+  animation: bk-shake 0.45s ease-in-out;
+}
+
+.bk-error {
+  display: block;
+  font-size: 11px;
+  letter-spacing: 0.04em;
+  color: #ef4444;
+  animation: bk-error-in 0.3s ease-out;
+}
+
+/* ---------- Pill inputs + select ---------- */
+.bk-input {
+  width: 100%;
+  height: 3rem;
+  padding: 0 1.25rem;
+  border: 1px solid;
+  border-radius: 9999px;
+  background-color: #faf7f5;
+  color: inherit;
+  font-family: inherit;
+  font-size: 14px;
+  outline: none;
+  transition: all 300ms ease-out;
+}
+
+.bk-input:focus {
+  transform: scale(1.015);
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+}
+
+.bk-border-ok {
+  border-color: rgba(0, 0, 0, 0.1);
+}
+.bk-border-ok:hover {
+  border-color: rgba(0, 0, 0, 0.25);
+}
+.bk-border-ok:focus {
+  border-color: rgba(0, 0, 0, 0.3);
+}
+
+.bk-border-err {
+  border-color: #f87171;
+}
+
+/* ---------- Textarea ---------- */
+.bk-textarea {
+  width: 100%;
+  padding: 1.25rem;
+  border: 1px solid rgba(0, 0, 0, 0.1);
+  border-radius: 1.2rem;
+  background-color: #faf7f5;
+  color: inherit;
+  font-family: inherit;
+  font-size: 14px;
+  outline: none;
+  resize: none;
+  transition: all 300ms ease-out;
+}
+
+.bk-textarea:hover {
+  border-color: rgba(0, 0, 0, 0.25);
+}
+
+.bk-textarea:focus {
+  border-color: rgba(0, 0, 0, 0.3);
+  transform: scale(1.01);
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+}
+
+/* ---------- Submit button ---------- */
+.bk-submit {
+  position: relative;
+  width: 100%;
+  height: 52px;
+  overflow: hidden;
+  border: 0;
+  border-radius: 9999px;
+  background-color: #b419b96e;
+  color: #0b0b0b;
+  font-family: inherit;
+  font-size: 13px;
+  font-weight: 500;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  cursor: pointer;
+  transition: all 300ms ease-out;
+}
+
+.bk-submit:hover {
+  transform: translateY(-0.125rem);
+  box-shadow: 0 18px 40px rgba(232, 174, 116, 0.55);
+}
+
+.bk-submit:active {
+  transform: translateY(0) scale(0.98);
+}
+
+/* Light streak that passes across every few seconds */
+.bk-shine {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  width: 20%;
+  pointer-events: none;
+  background-color: rgba(255, 255, 255, 0.4);
+  filter: blur(2px);
+  animation: bk-shine 4.5s ease-in-out infinite;
+}
+
+.bk-submit__label {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+}
+
+.bk-arrow {
+  display: inline-block;
+  transition: transform 300ms ease-out;
+}
+
+.bk-submit:hover .bk-arrow {
+  transform: translateX(0.375rem);
+}
+
+/* ---------- Footnote ---------- */
+.bk-note {
+  font-size: 11px;
+  letter-spacing: 0.02em;
+  text-align: center;
+  color: rgba(0, 0, 0, 0.5);
+}
+
+/* ---------- Reduced motion ---------- */
+@media (prefers-reduced-motion: reduce) {
+  .bk-shake,
+  .bk-error,
+  .bk-shine {
+    animation: none;
+  }
+  .bk-eyebrow {
+    transition: none;
+    opacity: 0.5;
+    transform: none;
+  }
+  .bk-sub {
+    transition: none;
+    opacity: 1;
+    transform: none;
+  }
+}

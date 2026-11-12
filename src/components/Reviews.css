@@ -1,0 +1,289 @@
+/* =========================================================
+   Reviews section
+   ========================================================= */
+
+/* ---------- Keyframes ---------- */
+@keyframes rv-marquee {
+  from { transform: translateX(0); }
+  to   { transform: translateX(-50%); }
+}
+
+/* ---------- Section + layout ---------- */
+.rv {
+  position: relative;
+  overflow-x: clip;
+  padding-bottom: 4rem;
+  color: #fff;
+  background-color: #03271f;
+  background-image: url("/images/bg-hero.png");
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+}
+
+.rv__container {
+  position: relative;
+  max-width: 1440px;
+  margin-left: auto;
+  margin-right: auto;
+  padding-left: 1rem;
+  padding-right: 1rem;
+}
+
+.rv__panel {
+  border-radius: 2rem;
+  padding-top: 2.5rem;
+  padding-bottom: 2.5rem;
+}
+
+.rv__head {
+  padding-left: 1.5rem;
+  padding-right: 1.5rem;
+}
+
+@media (min-width: 1024px) {
+  .rv {
+    padding-bottom: 6rem;
+  }
+  .rv__container {
+    padding-left: 2rem;
+    padding-right: 2rem;
+  }
+  .rv__panel {
+    padding-top: 4rem;
+    padding-bottom: 4rem;
+  }
+  .rv__head {
+    padding-left: 3rem;
+    padding-right: 3rem;
+  }
+}
+
+/* ---------- Scroll reveal ---------- */
+.rv-reveal {
+  transition: all 900ms cubic-bezier(0.22, 1, 0.36, 1);
+}
+.rv-reveal:not(.is-shown) {
+  opacity: 0;
+  transform: translateY(2rem);
+}
+.rv-reveal.is-shown {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.rv-row {
+  margin-top: 2.5rem;
+}
+
+@media (min-width: 1024px) {
+  .rv-row {
+    margin-top: 3.5rem;
+  }
+}
+
+/* ---------- Heading ---------- */
+.rv__title {
+  font-size: 48px;
+  line-height: 0.95;
+  letter-spacing: -0.03em;
+  color: #000000;
+}
+
+.rv__lead {
+  margin-top: 1.25rem;
+  max-width: 340px;
+  font-size: 13px;
+  line-height: 1.5;
+  color: #000000;
+}
+
+@media (min-width: 640px) {
+  .rv__title {
+    font-size: 64px;
+  }
+}
+
+@media (min-width: 1024px) {
+  .rv__title {
+    font-size: 84px;
+  }
+  .rv__lead {
+    font-size: 14px;
+  }
+}
+
+/* ---------- Draggable marquee ---------- */
+.rv-marquee {
+  overflow-x: auto;
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+.rv-marquee::-webkit-scrollbar {
+  display: none;
+}
+
+.rv-track {
+  display: flex;
+  width: max-content;
+  padding-left: 1.5rem;
+  animation: rv-marquee 45s linear infinite;
+}
+
+@media (min-width: 1024px) {
+  .rv-track {
+    padding-left: 3rem;
+  }
+}
+
+.rv-track.dragging {
+  animation: none;
+}
+.rv-marquee:hover .rv-track {
+  animation-play-state: paused;
+}
+.rv-marquee.is-dragging .rv-track {
+  animation: none;
+}
+
+.rv-item {
+  flex-shrink: 0;
+  padding-right: 1rem;
+}
+
+@media (min-width: 1024px) {
+  .rv-item {
+    padding-right: 1.25rem;
+  }
+}
+
+/* ---------- Review card ---------- */
+.rv-card {
+  position: relative;
+  flex-shrink: 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  width: 280px;
+  height: 340px;
+  padding: 1.5rem;
+  border-radius: 2rem;
+  background-color: #ffffff;
+  color: #1a1a1a;
+  cursor: grab;
+  user-select: none;
+  transition: box-shadow 300ms;
+}
+
+.rv-card:active {
+  cursor: grabbing;
+}
+
+@media (min-width: 640px) {
+  .rv-card {
+    width: 320px;
+    height: 380px;
+  }
+}
+
+@media (min-width: 1024px) {
+  .rv-card {
+    width: 380px;
+    height: 420px;
+    padding: 2rem;
+  }
+}
+
+.rv-stars {
+  display: flex;
+  gap: 0.25rem;
+  color: #b419b9a6;
+}
+
+.rv-stars svg {
+  width: 18px;
+  height: 18px;
+}
+
+.rv-card__text {
+  margin-top: 1.25rem;
+  font-size: 22px;
+  line-height: 1.25;
+  letter-spacing: -0.01em;
+  color: #1a1a1a;
+}
+
+@media (min-width: 1024px) {
+  .rv-card__text {
+    font-size: 26px;
+  }
+}
+
+.rv-card__footer {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.rv-card__avatar {
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 2.75rem;
+  height: 2.75rem;
+  border-radius: 0.5rem;
+  background-color: #b419b9a6;
+  color: #f1e9df;
+  font-size: 13px;
+  font-weight: 500;
+}
+
+.rv-card__info {
+  min-width: 0;
+  flex: 1 1 0%;
+  line-height: 1.25;
+}
+
+.rv-card__name,
+.rv-card__tag {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.rv-card__name {
+  font-size: 14px;
+  font-weight: 500;
+  color: #1a1a1a;
+}
+
+.rv-card__tag {
+  font-size: 12px;
+  color: rgba(0, 0, 0, 0.7);
+}
+
+.rv-card__ig {
+  flex-shrink: 0;
+  width: 1.5rem;
+  height: 1.5rem;
+  color: #000000a6;
+  transition: color 150ms;
+}
+
+.rv-card:hover .rv-card__ig {
+  color: #000;
+}
+
+/* ---------- Reduced motion ---------- */
+@media (prefers-reduced-motion: reduce) {
+  .rv-reveal {
+    transition: none;
+    opacity: 1 !important;
+    transform: none !important;
+  }
+  .rv-track {
+    animation: none;
+  }
+}

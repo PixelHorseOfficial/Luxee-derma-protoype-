@@ -1,0 +1,119 @@
+.ig {
+  --btn: #f8f7f5;
+  --ink: #0b0b0b;
+  --gap: 24px;
+  background: #bd99f76c; /* #bb9065 at 60% */
+  -webkit-backdrop-filter: blur(24px) saturate(1.5);
+  backdrop-filter: blur(24px) saturate(1.5);
+  color: #F1E9DF;
+  border: 1px solid rgba(255, 255, 255, 0.25);
+  box-shadow:
+    0 8px 32px rgba(0, 0, 0, 0.25),
+    inset 0 1px 0 rgba(255, 255, 255, 0.35);
+
+  color: var(--ink);
+  min-height: 100vh;
+  box-sizing: border-box;
+  padding: clamp(40px, 7vw, 72px) 24px clamp(48px, 8vw, 80px);
+  text-align: center;
+
+  /* Center everything (title, pictures, button) in the middle of the section */
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+/* Let the row take the full available width so it stays centred */
+.ig__row { width: 100%; }
+
+/* Heading: tight, lowercase-style grotesk like the reference */
+.ig__title {
+  margin: 0 auto clamp(20px, 3vw, 32px);
+  font-size: clamp(30px, 4.4vw, 46px);
+  font-weight: 400;
+  line-height: 1;
+  letter-spacing: -0.045em;
+}
+.ig__line { display: block; }
+
+/* Row: 4 small pictures + 1 big centre picture, all aligned to the top.
+   Wider row + smaller centre ratio = bigger side pictures (~240px vs ~190px),
+   while the centre picture stays roughly the same size (~420px). */
+.ig__row {
+  max-width: 1480px;
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: 1fr 1fr 1.75fr 1fr 1fr;
+  gap: var(--gap);
+  align-items: start;
+}
+
+.ig__tile {
+  position: relative;
+  display: block;
+  overflow: hidden;
+  background: transparent; /* no light strip behind the pictures */
+  aspect-ratio: 190 / 222;
+  opacity: 0;
+  transform: translateY(24px);
+  transition: opacity 0.8s ease, transform 0.8s cubic-bezier(0.22, 1, 0.36, 1);
+  transition-delay: calc(var(--i, 0) * 90ms);
+}
+.ig__tile--lg { aspect-ratio: 400 / 445; }
+.ig.is-in .ig__tile { opacity: 1 }
+
+.ig__tile img {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  /* Slight zoom crops away the thin white edges baked into the image files */
+  transform: scale(1.07);
+  transition: transform 0.9s cubic-bezier(0.22, 1, 0.36, 1);
+}
+.ig__tile:hover img { transform: scale(1.13); }
+
+/* Button: same width as the big centre picture */
+.ig__btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: min(400px, 100%);
+  height: 68px;
+  margin: clamp(40px, 5vw, 64px) auto 0; /* space between the pictures and the button */
+  border-radius: 999px;
+  background: var(--btn);
+  color: var(--ink);
+  font-size: clamp(20px, 2.4vw, 26px);
+  font-weight: 500;
+  line-height: 1;
+  letter-spacing: -0.03em;
+  text-decoration: none;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+.ig__btn:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 16px 36px rgba(238, 236, 235, 0.55);
+}
+.ig__btn:active { transform: translateY(0) scale(0.98); }
+.ig__btn:focus-visible,
+.ig__tile:focus-visible { outline: 2px solid var(--ink); outline-offset: 3px; }
+
+/* Tablet: slightly tighter */
+@media (max-width: 900px) {
+  .ig { --gap: 14px; }
+}
+
+/* Phone: big picture on top, four small ones in a 2x2 grid below */
+@media (max-width: 640px) {
+  .ig__row { grid-template-columns: 1fr 1fr; }
+  .ig__tile--lg { grid-column: 1 / -1; order: -1; }
+  .ig__btn { height: 58px; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .ig__tile { opacity: 1; transform: none; transition: none; }
+  .ig__tile img, .ig__btn { transition: none; }
+}
