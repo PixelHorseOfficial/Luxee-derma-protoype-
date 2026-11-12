@@ -17,9 +17,7 @@ function Rise({ show, delay = 0, className = "", children }) {
     >
       {children}
     </div>
-  )
-
-  3333333333333333
+  );
 }
 
 export default function Hero({ onNavigate }) {
@@ -32,9 +30,11 @@ export default function Hero({ onNavigate }) {
   return (
     <section
       id="hero"
-      className="relative isolate flex min-h-screen items-center overflow-hidden bg-neutral-900 text-white"
+      className="relative isolate flex min-h-[56.25vw] items-center overflow-hidden bg-neutral-900 text-white lg:min-h-screen"
     >
-      {/* Background video (muted, looping) */}
+      {/* Background video (muted, looping).
+          Mobile: the hero is exactly 16:9, so the video fills it with no bars
+          and no zoom. Desktop: fills the full-screen hero. */}
       <video
         src={HERO_VIDEO}
         autoPlay
@@ -43,11 +43,10 @@ export default function Hero({ onNavigate }) {
         playsInline
         preload="auto"
         aria-hidden="true"
-        className="absolute inset-0 -z-20 h-full w-full object-cover object-[70%_center]"
+        className="absolute inset-0 -z-20 h-full w-full object-cover object-center lg:object-[70%_center]"
       />
 
-
-      <div className="mx-auto w-full max-w-[1280px] px-6 pb-16 pt-32 lg:px-8 lg:pb-24 lg:pt-36">
+      <div className="mx-auto w-full max-w-[1280px] px-6 lg:px-8 lg:pb-24 lg:pt-36">
         <div className="max-w-[620px]">
     
         </div>
