@@ -1,5 +1,5 @@
 import { SITE } from "../../data/site";
-import { Reveal, MaskLine, useInView, useTilt } from "./contactMotion";
+import { Reveal, MaskLine, useInView, useTilt } from "./ContactMotion";
 import { useRef } from "react";
 
 // One info row: slides in on scroll, nudges right on hover while its icon spins.
