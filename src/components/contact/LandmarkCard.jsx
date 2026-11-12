@@ -1,5 +1,5 @@
 import { SITE } from "../../data/site";
-import { Reveal, useTilt } from "./contactMotion";
+import { Reveal, useTilt } from "./ContactMotion";
 
 export default function LandmarkCard({ delay = 0 }) {
   const tilt = useTilt({ max: 7, lift: 5 });
