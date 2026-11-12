@@ -58,7 +58,7 @@ export default function Header({ activeSection, onNavigate, onLogoClick }) {
         {/* Logo */}
         <button onClick={onLogoClick} className="hd-logo">
           <img
-            src="/images/logo.jpeg"
+            src="/images/logo1.png"
             alt={`${SITE.logo.line1} ${SITE.logo.line2} logo`}
             className="hd-logo-img"
           />
