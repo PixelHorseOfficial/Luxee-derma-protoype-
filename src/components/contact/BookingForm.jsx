@@ -1,6 +1,6 @@
 import { useRef, useState } from "react";
 import { CONCERN_OPTIONS } from "../../data/booking";
-import { Reveal, MaskLine, useInView } from "./contactMotion";
+import { Reveal, MaskLine, useInView } from "./ContactMotion";
 import "./BookingForm.css";
 
 const EMPTY_FORM = { name: "", phone: "", concern: "", date: "", message: "" };
